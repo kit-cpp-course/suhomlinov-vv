@@ -44,12 +44,12 @@ public:
     /*
      * Возвращает строку из параметров
      */
-    std::string getStringParam() { return (std::string)args[2]; };
+    std::string getStringParam() const { return (std::string)args[2]; };
     
     /*
      * Возвращает число из параметров
      */
-    int getNumberParam();
+    int getNumberParam() const;
 };
 
 
