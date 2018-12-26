@@ -8,47 +8,43 @@
 
 #pragma  once
 #include "cryptlib.hpp"
-#include "Keys.hpp"
+#include "Key.hpp"
+#include <memory.h>
+#include "keyFactory.hpp"
 
 /*
- * Класс ключ
- * В данном классе хранятся и генерируются ключи
+ * Класс ключ шифрования DES
+ * В данном классе хранится двоичное представление ключа, его длина
  */
 
-
-class key: public Keys {
-    
-    bool mainKey[block]; // Ключ шифрования в двоичном виде
-    bool fkeys[16][feistelLength]; // Ключи шифрования Фейстеля (необходимы для 16 циклов шифрования)
-    
-    // Функции
-    /*
-     * Генерирует ключи Фейстеля и добавляет их в fkeys
-     * @params k - изначальный ключ шифрования (mainkey)
-     */
-    
-    void generateFeistelKeys(bool * const k);
+class keyDES: public Key {
+    friend class keyFactory;
+    char * fkey; // битовое представление ключа
+    int length; // длина ключа
     
     /*
      * Копирует ключ
-     * @params k - какой-либо ключ шифрования
+     * @params key - ключ, данные корого будут копироваться
      * @params length - длина ключа
      */
+    char * copyKey(const char * key, short length);
     
-    bool * copyKey(const bool * const k, short length) const;
+    /*
+     * Устанавливает новое значение ключу ключ
+     * @params k - ключ, данные корого будут копироваться
+     * @params length - длина ключа
+     */
+    void setKey(char * k, int length);
     
 public:
     /*
      * конструктор
      */
-    key();
+    keyDES(char * k = 0, int length = 0);
     
     /*
-     * Возвращает определенный ключ Фейстеля из fkeys
-     * @params i - индекс ключа
+     * Возвращает двоичный ключ
      */
-    
-    bool * getFeistelKey(int i);
-    
+    char * getKey();
 };
 
