@@ -7,7 +7,7 @@
 //
 
 #pragma once
-#include "Keys.hpp"
+#include "KeysGenerator.hpp"
 
 /*
  * Класс, реализующий функцию Фейстеля
@@ -27,5 +27,5 @@ public:
      * @params key - ссылка на объект абстрактного класса Ключ
      * @params block - входной блок для шифрования/дешифрования
      */
-    void feistelCycle(bool * block, Keys & fkey) const;
+    void feistelCycle(char * block, KeysGenerator & fkey) const;
 };
