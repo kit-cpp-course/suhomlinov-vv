@@ -18,5 +18,5 @@ public:
     /*
      * Генерирует новые данные на основе поступивших
      */
-    virtual bool * genereteContent(bool *) = 0;
+    virtual char * genereteContent(char *) = 0;
 };
