@@ -49,6 +49,10 @@ public:
      */
     void writing(Contents & content);
     
+    /*
+     * Определяет дошло ли чтение файла до конца
+     */
+    
     bool isEnd();
 };
 
