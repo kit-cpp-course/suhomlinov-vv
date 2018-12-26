@@ -8,7 +8,7 @@
 #pragma once
 
 /*
- * Абстрактный класс, описывающий контент (даннных)
+ * Абстрактный класс, описывающий контент (даннныe)
  */
 
 class Contents {
@@ -18,5 +18,5 @@ public:
     /*
      * Генерирует новые данные на основе поступивших
      */
-    virtual bool * genereteContent(bool *) = 0;
+    virtual char * genereteContent(char *) = 0;
 };
