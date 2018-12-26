@@ -1,117 +1,59 @@
 //
-//  fileEditor.cpp
+//  fileEditor.hpp
 //  Des
 //
 //  Created by Виталий on 19.12.18.
 //  Copyright © 2018 vlad. All rights reserved.
 //
 
-#include "fileEditor.hpp"
-#include "cryptlib.hpp"
+#pragma once
+#include "File.hpp"
 #include "stdafx.hpp"
 #include "Contents.hpp"
 
-using namespace std;
-
-const string extention = ".txt";
-
-const string encrypt = "Enc";
-
-const string decrypt = "Dec";
-
- /*
-  * Возвращает размер файла
-  * @params pathFile - путь файла
-  */
-int getFileSize(const string & pathFile);
-
-/*
- * Переводит масссив символов в биты (bool)
- * @params symbols - массив символов
- * @params size - число битов
- */
-bool * convertToBits(const char * const symbols, int size);
-
-/*
- * Переводит масссив битов (bool) в символы (char)
- * @params bites - массив битов
- * @params size - число битов
- */
-char * convertToChar(const bool * const bites, int size);
-
-char * getEncryptedSymbols(Contents & content, char * readSymbols);
-
-// Реализация функций
-
-void editor::reading(int length) {
-    read = new char[blockLength];
-    rFile.read(read, blockLength);
+class editor: public File {
+    std::string newPath; // Путь к файлу без расширения
+    int mode; // Режим чтения
+    int size; // Размер файла
+    std::fstream rFile; // Файл чтения
+    std::ofstream wFile; // Файл записи
+    char * read; // Прочтенные символы
     
-    if (size >= length) { size -= blockLength; }
-    else if (size < length && size) {
-        for (int i = size; i < blockLength; i++) { read[i] = 0; } // В случае нечетного числа битов записываем в файл нули
-        size = 0;
-    }
-}
-
-editor::editor(const string & path, const int & mode) : mode(mode) {
-    rFile.open(path, ios::in);
-    getNewPath(path);
-    wFile.open(newPath, ios::app);
-    size = getFileSize(path);
-}
-
-void editor::getNewPath(const string path) {
-    string newpath = path;
-    newPath = (newpath.erase(newpath.length() - 4, newpath.length()));
-    newPath = newPath + (mode ? encrypt : decrypt) + extention;
-}
-
-void editor::writing(Contents & content) {
-    char * symbols;
+    /*
+     * Получает нувый путь к итоговому файлу
+     */
+    void getNewPath(const std::string);
     
-    symbols = getEncryptedSymbols(content, read);
-    writeInFile(symbols, wFile);
+    /*
+     * Осуществляет непосредственную запись в файл символов в соответствии с режимом
+     */
+    void writeInFile(const char * const symbols, std::ofstream & f);
+   
+public:
     
-    delete [] read;
-}
-
-char * getEncryptedSymbols(Contents & content, char * readSymbols) {
-    bool * bits, * cryptbits;
+    /*
+     * Конструктор
+     * @params path - путь файла
+     * @params mode - режим (шифрование, дешифрование)
+     * @params content - контент, который может использоваться для записи в файл
+     */
+    editor(const std::string & path, const int & mode);
     
-    bits = convertToBits(readSymbols, block);
-    cryptbits = content.genereteContent(bits);
+    /*
+     * Чтение файла
+     */
+    void reading(int length);
     
-    return convertToChar(cryptbits, block);;
-}
-
-void editor::writeInFile(const char * const symbols, ofstream & f) {
-    int i = 0;
-    if (mode || size) for (int i = 0; i < blockLength; i++) f << symbols[i];
-    else while (symbols[i]) f << symbols[i++]; // В случае расшифровки не записываем лишние нули
-}
-
-bool editor::isEnd() { return size; }
-
-bool * convertToBits(const char * const symbols, int size) {
-    bool * bits = new bool[size];
-    for (int i = 0; i < size; i++)
-        bits[i] = (symbols[i / 8] >> (i % 8)) & 1;
-    return bits;
-}
-
-char * convertToChar(const bool *  const bites, int size) {
-    char * letters = new char[size / 8];
-    memset(letters, 0, (size + 7) / 8);
+    /*
+     * Запись в файл контента
+     */
+    void writing(Contents & content);
     
-    for (int i = 0; i < size; i++) letters[i/8] |= bites[i] << (i % 8);
-    return letters;
-}
-
-int getFileSize(const string & pathFile) {
-    fstream file(pathFile, ios::in|ios::ate);
-    return (int)file.tellg();
-}
-
+    /*
+     * Определяет дошло ли чтение файла до конца
+     */
+    
+    bool isEnd();
+};
 
 
