@@ -18,19 +18,19 @@ class editor: public File {
     std::fstream rFile; // Файл чтения
     std::ofstream wFile; // Файл записи
     char * read; // Прочтенные символы
-    
+
     /*
      * Получает нувый путь к итоговому файлу
      */
     void getNewPath(const std::string);
-    
+
     /*
      * Осуществляет непосредственную запись в файл символов в соответствии с режимом
      */
     void writeInFile(const char * const symbols, std::ofstream & f);
-   
+
 public:
-    
+
     /*
      * Конструктор
      * @params path - путь файла
@@ -38,22 +38,17 @@ public:
      * @params content - контент, который может использоваться для записи в файл
      */
     editor(const std::string & path, const int & mode);
-    
+
     /*
      * Чтение файла
      */
     void reading(int length);
-    
+
     /*
      * Запись в файл контента
      */
     void writing(Contents & content);
-    
-    /*
-     * Определяет дошло ли чтение файла до конца
-     */
-    
+
     bool isEnd();
 };
-
 
