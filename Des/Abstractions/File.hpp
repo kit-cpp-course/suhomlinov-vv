@@ -14,23 +14,22 @@
  */
 
 class File {
-    
+
 public:
     /*
      * Чтение данных определенной длины
      * @params length - длина чтения
      */
     virtual void reading(int length) = 0;
-    
+
     /*
      * Запись данных в файл
      */
     virtual void writing(Contents & content) = 0;
-    
+
     /*
      * Определяет дошло ли чтение файла до конца
      */
     virtual bool isEnd() = 0;
-    
-};
 
+};
