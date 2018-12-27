@@ -19,3 +19,4 @@ public:
      * Генерирует новые данные на основе поступивших
      */
     virtual bool * genereteContent(bool *) = 0;
+};
