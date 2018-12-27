@@ -8,15 +8,14 @@
 #pragma once
 
 /*
- * Абстрактный класс, описывающий контент (даннныe)
+ * Абстрактный класс, описывающий контент (даннных)
  */
 
 class Contents {
-    
+
 public:
-    
+
     /*
      * Генерирует новые данные на основе поступивших
      */
-    virtual char * genereteContent(char *) = 0;
-};
+    virtual bool * genereteContent(bool *) = 0;
