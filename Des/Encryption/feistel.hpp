@@ -7,7 +7,7 @@
 //
 
 #pragma once
-#include "KeysGenerator.hpp"
+#include "Keys.hpp"
 
 /*
  * Класс, реализующий функцию Фейстеля
@@ -21,11 +21,11 @@ public:
      * @params mode - режим (шифрование/дешифрование)
      */
     feistel(const int & mode) : mode(mode) {}
-    
+
     /*
      * Преобразует исходный блок 16 циклами преобразования Фейстеля
      * @params key - ссылка на объект абстрактного класса Ключ
      * @params block - входной блок для шифрования/дешифрования
      */
-    void feistelCycle(char * block, KeysGenerator & fkey) const;
+    void feistelCycle(bool * block, Keys & fkey) const;
 };
