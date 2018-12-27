@@ -17,11 +17,14 @@ const char zeroCode = 48;
 
 bool params::isParamsCorrect() {
     if (count != 3) { //На mac os первый аргумент путь к программе
-        throw string("Incorrect number of arguments");
+        cout << "Incorrect number of arguments" << endl;
+        return false;
     } else if (!isRightNumber(1, zeroCode, oneCode)) {
-        throw string("Incorrect mode. Use only 0 to decrypt and 1 to encrypt");
+        cout << "Incorrect mode. Use only 0 to decrypt and 1 to encrypt" << endl;
+        return false;
     } else if (!isFileExist()) {
-        throw string("File with the current path is not exist");
+        cout << "Incorrect path";
+        return false;
     }
     return true;
 }
@@ -34,8 +37,7 @@ bool params::isFileExist() const {
     ifstream f(args[2]);
     return f.is_open();
 }
-int params::getNumberParam() const {
+int params::getNumberParam() {
     { return *args[1] - zeroCode; }
 }
-
 
